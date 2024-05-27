@@ -7,6 +7,7 @@ import com.dezdeqness.data.model.FilterItem
 import com.dezdeqness.data.model.GenreRemote
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.GenreEntity
+import com.dezdeqness.domain.repository.GenreRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import okio.buffer
@@ -17,9 +18,16 @@ class ConfigurationProvider(
     private val genreMapper: GenreMapper,
     private val filterMapper: FilterMapper,
     private val moshi: Moshi,
+    private val genreRepository: GenreRepository,
 ) {
 
     fun getListGenre(): List<GenreEntity> {
+        val localGenres = genreRepository.getGenresLocal()
+
+        if (localGenres.isNotEmpty()) {
+            return localGenres
+        }
+
         val inputStream = assetManager.open(FILENAME_GENRE_JSON)
         val type = Types.newParameterizedType(List::class.java, GenreRemote::class.java)
         val adapter = moshi.adapter<List<GenreRemote>>(type)

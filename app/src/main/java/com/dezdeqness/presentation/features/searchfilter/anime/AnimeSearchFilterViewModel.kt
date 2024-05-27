@@ -31,13 +31,15 @@ class AnimeSearchFilterViewModel @Inject constructor(
     private val selectedCells: MutableList<AnimeCell> = mutableListOf()
 
     init {
-        if (list.isEmpty()) {
-            val list = searchFilterRepository.getFilterConfiguration()
-            _animeSearchFilterStateFlow.value =
-                AnimeSearchFilterState(items = animeSearchFilterComposer.compose(list))
-        } else {
-            _animeSearchFilterStateFlow.value =
-                AnimeSearchFilterState(items = list)
+        launchOnIo {
+            if (list.isEmpty()) {
+                val list = searchFilterRepository.getFilterConfiguration()
+                _animeSearchFilterStateFlow.value =
+                    AnimeSearchFilterState(items = animeSearchFilterComposer.compose(list))
+            } else {
+                _animeSearchFilterStateFlow.value =
+                    AnimeSearchFilterState(items = list)
+            }
         }
     }
 
