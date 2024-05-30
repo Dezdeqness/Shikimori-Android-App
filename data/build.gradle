@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
 
         buildConfigField "String", "BASE_API_URL", "\"https://shikimori.one/api/\""
         buildConfigField "String", "BASE_AUTHORIZATION_URL", "\"https://shikimori.one/\""
